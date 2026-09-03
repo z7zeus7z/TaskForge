@@ -1,0 +1,186 @@
+.sidebarContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  height: 100vh;
+  padding: var(--space-8) var(--space-4);
+  background: var(--color-sidebar);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--color-sidebar-text);
+}
+
+.logo {
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-10);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.5px;
+}
+
+.sidebarLinks {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.workSpace,
+.management {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.workSpace::before,
+.management::before {
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-2);
+  color: #777d91;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workSpace::before {
+  content: "Workspace";
+}
+
+.management::before {
+  content: "Management";
+}
+
+.home,
+.projects,
+.tasks,
+.teams,
+.profile,
+.notification,
+.settings,
+.logOut {
+  width: 100%;
+}
+
+.home a,
+.projects a,
+.tasks a,
+.teams a,
+.profile a,
+.notification a,
+.settings a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 11px var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-sidebar-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition:
+    background var(--transition-normal),
+    color var(--transition-normal),
+    border-color var(--transition-normal),
+    transform var(--transition-fast);
+}
+
+.home a:hover,
+.projects a:hover,
+.tasks a:hover,
+.teams a:hover,
+.profile a:hover,
+.notification a:hover,
+.settings a:hover {
+  background: var(--color-sidebar-hover);
+  border-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-sidebar-text-active);
+  transform: translateX(2px);
+}
+
+.home a svg,
+.projects a svg,
+.tasks a svg,
+.teams a svg,
+.profile a svg,
+.notification a svg,
+.settings a svg {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.home p,
+.projects p,
+.tasks p,
+.teams p,
+.profile p,
+.notification p,
+.settings p,
+.logOut p {
+  margin: 0;
+}
+
+.logOut {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 11px var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-sidebar-text);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    color var(--transition-normal),
+    border-color var(--transition-normal),
+    transform var(--transition-fast);
+}
+
+.logOut:hover {
+  background: var(--color-sidebar-hover);
+  border-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-sidebar-text-active);
+  transform: translateX(2px);
+}
+
+.logOut:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.logOut svg {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.logOut p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .sidebarContainer {
+    width: var(--sidebar-width);
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebarContainer {
+    width: 240px;
+    padding: var(--space-6) var(--space-3);
+  }
+
+  .logo {
+    margin-bottom: var(--space-8);
+  }
+}

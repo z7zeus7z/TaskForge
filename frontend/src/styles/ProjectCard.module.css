@@ -1,0 +1,195 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal);
+}
+.cardContainer:hover {
+  transform: translateY(-3px);
+  border-color: rgba(92, 76, 255, 0.2);
+  box-shadow: var(--shadow-md);
+}
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.projectName {
+  min-width: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.actionButtons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.actionButtons button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    color var(--transition-normal),
+    border-color var(--transition-normal),
+    transform var(--transition-fast);
+}
+.actionButtons button:hover {
+  background: var(--color-background);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+.actionButtons button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.projectDescription {
+  flex: 1;
+  padding: var(--space-5) 0;
+}
+.projectDescription p {
+  display: -webkit-box;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  overflow: hidden;
+}
+.ProjectInfo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+}
+.ProjectInfo p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+}
+.ProjectInfo p::first-line {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+.footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition:
+    color var(--transition-normal),
+    transform var(--transition-fast);
+}
+.footer a::after {
+  content: "→";
+  transition: transform var(--transition-fast);
+}
+.footer a:hover {
+  color: var(--color-primary-hover);
+}
+.footer a:hover::after {
+  transform: translateX(3px);
+}
+.dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 170px;
+  padding: var(--space-1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+.dropdown button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 9px var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    color var(--transition-normal);
+}
+.dropdown button:hover {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+.dropdown button svg {
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+.dropdownDivider {
+  height: 1px;
+  margin: var(--space-1) 0;
+  background: var(--color-border);
+}
+.dropdown .deleteAction {
+  color: #c24141;
+}
+.dropdown .deleteAction:hover {
+  background: rgba(194, 65, 65, 0.08);
+  color: #b42323;
+}
+@media (max-width: 480px) {
+  .cardContainer {
+    min-height: 230px;
+    padding: var(--space-4);
+  }
+  .projectName {
+    font-size: var(--font-size-base);
+  }
+  .ProjectInfo {
+    gap: var(--space-2);
+  }
+  .ProjectInfo p {
+    font-size: var(--font-size-xs);
+  }
+}

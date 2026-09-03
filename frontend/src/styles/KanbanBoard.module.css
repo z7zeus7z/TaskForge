@@ -1,0 +1,22 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+} /* Tablet */
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    overflow-x: auto;
+    padding-bottom: var(--space-3);
+  }
+} /* Mobile */
+@media (max-width: 600px) {
+  .board {
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: var(--space-4);
+    overflow-x: auto;
+  }
+}
