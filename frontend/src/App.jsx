@@ -11,7 +11,12 @@ import EditProject from "./pages/EditProject";
 import TeamPage from "./pages/TeamPage";
 import ProfilePage from "./pages/ProfilePage";
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 function App() {
+  const API_URL = import.meta.env.VITE_API_URL;
+  useEffect(() => {
+    fetch(`${API_URL}/api/health`).catch(() => {});
+  }, [API_URL]);
   return (
     <>
       <Routes>
