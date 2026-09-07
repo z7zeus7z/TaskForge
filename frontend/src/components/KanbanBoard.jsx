@@ -3,11 +3,10 @@ import KanbanColumn from "./KanbanColumn";
 import { useState } from "react";
 import { apiRequest } from "../services/api.js";
 import { useAuth } from "../context/useAuth.js";
-
+import { DragDropProvider } from "@dnd-kit/react";
 const KanbanBoard = ({ tasks = [], onTaskStatusChange }) => {
   const { user } = useAuth();
 
-  const [draggedTask, setDraggedTask] = useState(null);
   const [error, setError] = useState("");
 
   const todoTasks = tasks.filter((task) => task.status === "todo");
@@ -16,85 +15,69 @@ const KanbanBoard = ({ tasks = [], onTaskStatusChange }) => {
 
   const completedTasks = tasks.filter((task) => task.status === "completed");
 
-  const handleDragStart = (task) => {
-    const isAssignedToUser = task.assignedTo?._id === user?.userId;
+  const handleDragEnd = async ({ operation }) => {
+    const { source, target } = operation;
 
-    if (!isAssignedToUser) {
+    if (!source || !target) {
       return;
     }
 
-    setDraggedTask(task);
-    setError("");
-  };
+    const taskId = source.id;
+    const newStatus = target.id;
 
-  const handleDrop = async (newStatus) => {
-    if (!draggedTask) {
-      return;
-    }
+    const task = tasks.find((task) => task._id === taskId);
 
-    if (draggedTask.status === newStatus) {
-      setDraggedTask(null);
+    if (!task || task.status === newStatus) {
       return;
     }
 
     try {
-      const { response, data } = await apiRequest(
-        `/tasks/${draggedTask._id}/status`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({
-            status: newStatus,
-          }),
-        },
-      );
+      const { response, data } = await apiRequest(`/tasks/${taskId}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          status: newStatus,
+        }),
+      });
 
       if (!response.ok) {
         setError(data.message || "Failed to update task status");
-        setDraggedTask(null);
         return;
       }
 
-      onTaskStatusChange(draggedTask._id, data.task.status);
-      setDraggedTask(null);
+      onTaskStatusChange(taskId, data.task.status);
     } catch (error) {
       console.error("Error updating task status", error);
       setError("Something went wrong while updating the task");
-      setDraggedTask(null);
     }
   };
 
   return (
     <div>
       {error && <p>{error}</p>}
+      <DragDropProvider onDragEnd={handleDragEnd}>
+        <div className={styles.board}>
+          <KanbanColumn
+            title="To Do"
+            status="todo"
+            tasks={todoTasks}
+            userId={user?.userId}
+          />
 
-      <div className={styles.board}>
-        <KanbanColumn
-          title="To Do"
-          status="todo"
-          tasks={todoTasks}
-          onDragStart={handleDragStart}
-          onDrop={handleDrop}
-          userId={user?.userId}
-        />
+          <KanbanColumn
+            title="In Progress"
+            status="in-progress"
+            tasks={inProgressTasks}
+            userId={user?.userId}
+          />
 
-        <KanbanColumn
-          title="In Progress"
-          status="in-progress"
-          tasks={inProgressTasks}
-          onDragStart={handleDragStart}
-          onDrop={handleDrop}
-          userId={user?.userId}
-        />
-
-        <KanbanColumn
-          title="Completed"
-          status="completed"
-          tasks={completedTasks}
-          onDragStart={handleDragStart}
-          onDrop={handleDrop}
-          userId={user?.userId}
-        />
-      </div>
+          <KanbanColumn
+            title="Completed"
+            status="completed"
+            tasks={completedTasks}
+            userId={user?.userId}
+          />
+        </div>
+      </DragDropProvider>
     </div>
   );
 };

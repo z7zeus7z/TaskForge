@@ -1,20 +1,18 @@
 import styles from "../styles/KanbanColumn.module.css";
 import TaskCard from "./TaskCard";
-
+import { useDroppable } from "@dnd-kit/react";
 const KanbanColumn = ({
   title,
   status,
   tasks = [],
-  onDragStart,
-  onDrop,
+
   userId,
 }) => {
+  const { ref } = useDroppable({
+    id: status,
+  });
   return (
-    <div
-      className={styles.column}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={() => onDrop(status)}
-    >
+    <div className={styles.column} ref={ref}>
       <div className={styles.columnHeader}>
         <h3>{title}</h3>
         <span>{tasks.length}</span>
@@ -26,7 +24,6 @@ const KanbanColumn = ({
             <TaskCard
               key={task._id}
               task={task}
-              onDragStart={onDragStart}
               isDraggable={task.assignedTo?._id === userId}
             />
           ))

@@ -1,7 +1,11 @@
 import styles from "../styles/TaskCard.module.css";
 import { CalendarDays, UserRound } from "lucide-react";
-
-const TaskCard = ({ task, onDragStart, isDraggable }) => {
+import { useDraggable } from "@dnd-kit/react";
+const TaskCard = ({ task, isDraggable }) => {
+  const { ref } = useDraggable({
+    id: task._id,
+    disabled: !isDraggable,
+  });
   const formattedDate = new Date(task.dueDate).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -13,15 +17,7 @@ const TaskCard = ({ task, onDragStart, isDraggable }) => {
     : "Unassigned";
 
   return (
-    <div
-      className={styles.card}
-      draggable={isDraggable}
-      onDragStart={() => {
-        if (isDraggable) {
-          onDragStart(task);
-        }
-      }}
-    >
+    <div className={styles.card} ref={ref}>
       <div className={styles.header}>
         <h4>{task.title}</h4>
 
